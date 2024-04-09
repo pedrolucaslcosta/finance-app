@@ -1,16 +1,17 @@
-import Link from "next/link"
+import Link from "next/link";
 import {
     ArrowLeftRight,
     Bell,
     CircleUser,
+    CogIcon,
     Landmark,
     Menu,
     Tags,
     Users,
     WalletCards,
-} from "lucide-react"
+} from "lucide-react";
 
-import Image from "next/image"
+import Image from "next/image";
 
 import {
     File,
@@ -26,8 +27,8 @@ import {
     Settings,
     ShoppingCart,
     Users2,
-} from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -35,8 +36,8 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -44,7 +45,7 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -53,9 +54,9 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
     Table,
     TableBody,
@@ -63,19 +64,15 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table"
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from "@/components/ui/tabs"
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/tooltip";
+import { Label } from "@/components/ui/label";
+import { SideBarLink } from "@/components/sidebar-link";
 
 export default function Dashboard() {
     return (
@@ -94,26 +91,26 @@ export default function Dashboard() {
                     </div>
                     <div className="flex-1">
                         <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-                            <Link
+                            {/* <Link
                                 href="#"
                                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                             >
                                 <Home className="h-4 w-4" />
                                 Início
-                            </Link>
+                            </Link> */}
                             <Link
                                 href="#"
-                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                             >
                                 <ArrowLeftRight className="h-4 w-4" />
                                 Transações
-                                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                                {/* <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                                     6
-                                </Badge>
+                                </Badge> */}
                             </Link>
-                            <Link
+                            {/* <Link
                                 href="#"
-                                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-primary transition-all hover:text-primary"
                             >
                                 <Landmark className="h-4 w-4" />
                                 Contas
@@ -146,9 +143,13 @@ export default function Dashboard() {
                                 <LineChart className="h-4 w-4" />
                                 Assinaturas
                             </Link>
+
+                            <div data-orientation="horizontal" role="none" className="shrink-0 bg-border h-[1px] w-full my-4"></div>
+
+                            <SideBarLink text="Configurações" /> */}
                         </nav>
                     </div>
-                    <div className="mt-auto p-4">
+                    {/* <div className="mt-auto p-4">
                         <Card>
                             <CardHeader className="p-2 pt-0 md:p-4">
                                 <CardTitle>Upgrade to Pro</CardTitle>
@@ -163,7 +164,7 @@ export default function Dashboard() {
                                 </Button>
                             </CardContent>
                         </Card>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="flex flex-col">
@@ -291,21 +292,22 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </main> */}
-                <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:p-6 bg-muted/40">
+                <main className="grid items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:p-6 bg-muted/40">
                     <div className="">
-                        <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
-                        <p className="text-muted-foreground">Gerencie a movimentação de entradas e saídas de suas contas bancárias.</p>
+                        <h1 className="text-lg font-semibold md:text-2xl">Transações</h1>
+                        <p className="text-muted-foreground">
+                            Gerencie a movimentação de entradas e saídas de suas contas
+                            bancárias.
+                        </p>
                     </div>
-                    <Tabs defaultValue="all">
+                    <Tabs defaultValue="today">
                         <div className="flex items-center">
                             <TabsList>
-                                <TabsTrigger value="today">Hoje</TabsTrigger>
-                                <TabsTrigger value="this-month">Esse mês</TabsTrigger>
+                                {/* <TabsTrigger value="today">Hoje</TabsTrigger> */}
+                                {/* <TabsTrigger value="this-month">Esse mês</TabsTrigger> */}
                                 <TabsTrigger value="all">Todas</TabsTrigger>
                             </TabsList>
                             <div className="ml-auto flex items-center gap-2">
-
-                                
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="outline" size="sm" className="h-8 gap-1">
@@ -318,7 +320,9 @@ export default function Dashboard() {
                                     <DropdownMenuContent align="end">
                                         <DropdownMenuLabel>Filtrar por</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuCheckboxItem checked>Data</DropdownMenuCheckboxItem>
+                                        <DropdownMenuCheckboxItem checked>
+                                            Data
+                                        </DropdownMenuCheckboxItem>
                                         <DropdownMenuCheckboxItem>Tipo</DropdownMenuCheckboxItem>
                                         <DropdownMenuCheckboxItem>Conta</DropdownMenuCheckboxItem>
                                     </DropdownMenuContent>
@@ -337,9 +341,7 @@ export default function Dashboard() {
                                 </Button>
                             </div>
                         </div>
-                        <TabsContent value="today">
-                        
-
+                        <TabsContent value="all">
                             <div className="rounded-md border bg-background">
                                 <Table>
                                     <TableHeader>
@@ -366,7 +368,11 @@ export default function Dashboard() {
                                             <TableCell>
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
-                                                        <Button aria-haspopup="true" size="icon" variant="ghost">
+                                                        <Button
+                                                            aria-haspopup="true"
+                                                            size="icon"
+                                                            variant="ghost"
+                                                        >
                                                             <MoreHorizontal className="h-4 w-4" />
                                                             <span className="sr-only">Toggle menu</span>
                                                         </Button>
@@ -385,8 +391,7 @@ export default function Dashboard() {
                         </TabsContent>
                     </Tabs>
                 </main>
-                
             </div>
         </div>
-    )
+    );
 }
