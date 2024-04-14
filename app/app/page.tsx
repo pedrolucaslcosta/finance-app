@@ -1,12 +1,16 @@
 import Link from "next/link";
 import {
+    AppleIcon,
     ArrowLeftRight,
+    ArrowLeftRightIcon,
     Bell,
     CircleUser,
     CogIcon,
     Landmark,
     Menu,
     Tags,
+    TrendingDownIcon,
+    TrendingUpIcon,
     Users,
     WalletCards,
 } from "lucide-react";
@@ -55,6 +59,15 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -73,8 +86,20 @@ import {
 } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
 import { SideBarLink } from "@/components/sidebar-link";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 export default function Dashboard() {
+
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    var today = new Date();
+    var todayDate = formatDate(today);
+
     return (
         <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
             <div className="hidden border-r bg-background md:block">
@@ -327,18 +352,222 @@ export default function Dashboard() {
                                         <DropdownMenuCheckboxItem>Conta</DropdownMenuCheckboxItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button size="sm" className="h-8 gap-1">
+                                            <PlusCircle className="h-3.5 w-3.5" />
+                                            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                                Nova Transação
+                                            </span>
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                        <DropdownMenuItem>
+                                            <Dialog>
+                                                <DialogTrigger>
+                                                    <div className="flex gap-2 items-center">
+                                                        <TrendingUpIcon className="h-3.5 w-3.5 text-emerald-500" />
+                                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                                            Receita
+                                                        </span>
+                                                    </div>
+                                                </DialogTrigger>
+                                                <DialogContent className="sm:max-w-[425px]">
+                                                    <DialogHeader>
+                                                        <DialogTitle>Nova Transação</DialogTitle>
+                                                        <DialogDescription>
+                                                            Crie uma nova trasação em uma de suas contas.
+                                                        </DialogDescription>
+                                                    </DialogHeader>
+                                                    <div className="grid gap-4 py-4">
+                                                        <div className="grid grid-cols-4 items-center gap-4">
+                                                            <Label htmlFor="name" className="text-right">
+                                                                Data
+                                                            </Label>
+                                                            <Input
+                                                                type="date"
+                                                                id="date"
+                                                                defaultValue={todayDate}
+                                                                className="col-span-3"
+                                                            />
+                                                        </div>
+                                                        <div className="grid grid-cols-4 items-center gap-4">
+                                                            <Label htmlFor="username" className="text-right">
+                                                                Descrição
+                                                            </Label>
+                                                            <Input
+                                                                id="description"
+                                                                className="col-span-3"
+                                                            />
+                                                        </div>
+                                                        <div className="grid grid-cols-4 items-center gap-4">
+                                                            <Label htmlFor="username" className="text-right">
+                                                                Valor (R$)
+                                                            </Label>
+                                                            <Input
+                                                                id="description"
+                                                                className="col-span-3"
+                                                            />
+                                                        </div>
+                                                        <div className="grid grid-cols-4 items-center gap-4">
+                                                            <Label htmlFor="username" className="text-right">
+                                                                Categoria
+                                                            </Label>
+                                                            <Select>
+                                                                <SelectTrigger className="w-[280px]">
+                                                                    <SelectValue placeholder="Selecione" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectGroup>
+                                                                        {/* <SelectLabel>North America</SelectLabel> */}
+                                                                        <SelectItem value="est">Transporte</SelectItem>
+                                                                        <SelectItem value="est">Mercado</SelectItem>
+                                                                        <SelectItem value="est">Assinaturas</SelectItem>
+                                                                        <SelectItem value="est">Saídas/Lanches</SelectItem>
+                                                                    </SelectGroup>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </div>
+                                                        <div className="grid grid-cols-4 items-center gap-4">
+                                                            <Label htmlFor="username" className="text-right">
+                                                                Forma de Pagamento
+                                                            </Label>
+                                                            <Select>
+                                                                <SelectTrigger className="w-[280px]">
+                                                                    <SelectValue placeholder="Selecione" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectGroup>
+                                                                        {/* <SelectLabel>North America</SelectLabel> */}
+                                                                        <SelectItem value="est">Dinheiro</SelectItem>
+                                                                        <SelectItem value="est">PIX</SelectItem>
+                                                                        <SelectItem value="est">Cartão de Crédito</SelectItem>
+                                                                        <SelectItem value="est">Cartão de Débito</SelectItem>
+                                                                    </SelectGroup>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </div>
+                                                    </div>
+                                                    <DialogFooter>
+                                                        <Button type="submit">Save changes</Button>
+                                                    </DialogFooter>
+                                                </DialogContent>
+                                            </Dialog>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <div className="flex gap-2 items-center">
+                                                <TrendingDownIcon className="h-3.5 w-3.5 text-red-500" />
+                                                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                                    Despesas
+                                                </span>
+                                            </div>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <div className="flex gap-2 items-center">
+                                                <ArrowLeftRightIcon className="h-3.5 w-3.5 text-blue-500" />
+                                                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                                    Transferência
+                                                </span>
+                                            </div>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                                 {/* <Button size="sm" variant="outline" className="h-8 gap-1">
                                     <File className="h-3.5 w-3.5" />
                                     <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                                         Export
                                     </span>
                                 </Button> */}
-                                <Button size="sm" className="h-8 gap-1">
-                                    <PlusCircle className="h-3.5 w-3.5" />
-                                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                        Nova Transação
-                                    </span>
-                                </Button>
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <Button size="sm" className="h-8 gap-1">
+                                            <PlusCircle className="h-3.5 w-3.5" />
+                                            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                                Nova Transação
+                                            </span>
+                                        </Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-[425px]">
+                                        <DialogHeader>
+                                            <DialogTitle>Nova Transação</DialogTitle>
+                                            <DialogDescription>
+                                                Crie uma nova trasação em uma de suas contas.
+                                            </DialogDescription>
+                                        </DialogHeader>
+                                        <div className="grid gap-4 py-4">
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label htmlFor="name" className="text-right">
+                                                    Data
+                                                </Label>
+                                                <Input
+                                                    type="date"
+                                                    id="date"
+                                                    defaultValue={todayDate}
+                                                    className="col-span-3"
+                                                />
+                                            </div>
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label htmlFor="username" className="text-right">
+                                                    Descrição
+                                                </Label>
+                                                <Input
+                                                    id="description"
+                                                    className="col-span-3"
+                                                />
+                                            </div>
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label htmlFor="username" className="text-right">
+                                                    Valor (R$)
+                                                </Label>
+                                                <Input
+                                                    id="description"
+                                                    className="col-span-3"
+                                                />
+                                            </div>
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label htmlFor="username" className="text-right">
+                                                    Categoria
+                                                </Label>
+                                                <Select>
+                                                    <SelectTrigger className="w-[280px]">
+                                                        <SelectValue placeholder="Selecione" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            {/* <SelectLabel>North America</SelectLabel> */}
+                                                            <SelectItem value="est">Transporte</SelectItem>
+                                                            <SelectItem value="est">Mercado</SelectItem>
+                                                            <SelectItem value="est">Assinaturas</SelectItem>
+                                                            <SelectItem value="est">Saídas/Lanches</SelectItem>
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                            <div className="grid grid-cols-4 items-center gap-4">
+                                                <Label htmlFor="username" className="text-right">
+                                                    Forma de Pagamento
+                                                </Label>
+                                                <Select>
+                                                    <SelectTrigger className="w-[280px]">
+                                                        <SelectValue placeholder="Selecione" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            {/* <SelectLabel>North America</SelectLabel> */}
+                                                            <SelectItem value="est">Dinheiro</SelectItem>
+                                                            <SelectItem value="est">PIX</SelectItem>
+                                                            <SelectItem value="est">Cartão de Crédito</SelectItem>
+                                                            <SelectItem value="est">Cartão de Débito</SelectItem>
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        </div>
+                                        <DialogFooter>
+                                            <Button type="submit">Save changes</Button>
+                                        </DialogFooter>
+                                    </DialogContent>
+                                </Dialog>
                             </div>
                         </div>
                         <TabsContent value="all">
