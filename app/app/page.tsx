@@ -87,6 +87,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { SideBarLink } from "@/components/sidebar-link";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { ModeToggle } from "@/components/theme-toggler";
 
 export default function Dashboard() {
 
@@ -283,6 +284,9 @@ export default function Dashboard() {
                             </div>
                         </form>
                     </div>
+                    
+                    <ModeToggle></ModeToggle>
+
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="secondary" size="icon" className="rounded-full">
