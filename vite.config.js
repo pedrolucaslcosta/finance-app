@@ -10,4 +10,8 @@ export default defineConfig({
         }),
         react(),
     ],
+    server: {
+        host: '192.168.0.4',
+        port: 3000,
+    },
 });

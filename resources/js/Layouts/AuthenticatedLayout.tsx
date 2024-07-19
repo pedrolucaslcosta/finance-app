@@ -1,12 +1,13 @@
-import { useState, PropsWithChildren, ReactNode } from 'react';
+import { useState, PropsWithChildren, ReactNode, useEffect } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { User } from '@/types';
 import { Button } from '@/Components/ui/button';
 import { PlusIcon, Wallet } from 'lucide-react';
+import { Toaster } from "@/Components/ui/sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs"
 import {
     Activity,
@@ -182,6 +183,9 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                     <main>{children}</main>
                 </main>
             </div>
+
+            {/* Toaster Notifications */}
+            <Toaster />
         </>
     );
 }

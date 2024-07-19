@@ -31,19 +31,21 @@ import {
     FormMessage,
 } from "@/Components/ui/form"
 import { Input } from "@/Components/ui/input"
+import { toast } from 'sonner';
+import { useEffect, useState } from 'react';
+import { columns, FixedExpense } from './Columns';
+import { DataTable } from '@/Components/ui/data-table';
 
 const formSchema = z.object({
     description: z.string().min(1).max(50),
     amount: z.string().min(1).max(50),
 });
 
-type FixedExpense = {
-    id: number;
-    description: string;
-    amount: number;
-};
+
 
 export default function FixedExpenses({ auth, fixedExpenses }: PageProps<{ fixedExpenses: FixedExpense[] }>) {
+
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
@@ -56,8 +58,25 @@ export default function FixedExpenses({ auth, fixedExpenses }: PageProps<{ fixed
 
     // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof formSchema>) {
-        router.post('/fixed-expense', values); // Envia os dados para o endpoint Laravel
+        router.post('/fixed-expense', values, {
+            onSuccess: () => {
+                toast.success('Conta Fixa Criada com Sucesso!');
+                // setIsDialogOpen(false);
+                form.reset();
+            },
+            onError: () => {
+                toast.error('Erro ao criar conta fixa.');
+            }
+        });
     }
+
+    // useEffect(() => {
+    //     const handleSuccessToast = () => {
+    //         setIsDialogOpen(false);
+    //     };
+
+    //     handleSuccessToast();
+    // }, [toast.success]);
 
     return (
         <AuthenticatedLayout
@@ -66,7 +85,7 @@ export default function FixedExpenses({ auth, fixedExpenses }: PageProps<{ fixed
         >
             <Head title="Transações" />
             <div className="flex justify-end my-2">
-                <Dialog>
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <DialogTrigger>
                         <Button>
                             <PlusCircle className='h-4 w-4 mr-2'></PlusCircle>
@@ -89,11 +108,11 @@ export default function FixedExpenses({ auth, fixedExpenses }: PageProps<{ fixed
                                         <FormItem>
                                             <FormLabel>Descrição</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="shadcn" {...field} />
+                                                <Input placeholder="Ex.: Aluguel" {...field} />
                                             </FormControl>
-                                            <FormDescription>
+                                            {/* <FormDescription>
                                                 Esse é o nome que aparecerá como título da Despesa Fixa.
-                                            </FormDescription>
+                                            </FormDescription> */}
                                             <FormMessage />
                                         </FormItem>
                                     )}
@@ -112,7 +131,7 @@ export default function FixedExpenses({ auth, fixedExpenses }: PageProps<{ fixed
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="submit">Submit</Button>
+                                <Button type="submit">Criar</Button>
                             </form>
                         </Form>
                     </DialogContent>
@@ -129,6 +148,7 @@ export default function FixedExpenses({ auth, fixedExpenses }: PageProps<{ fixed
 
                 </CardHeader>
                 <CardContent>
+                    <DataTable columns={columns} data={fixedExpenses}/>
                     <Table>
                         <TableHeader>
                             <TableRow>
