@@ -5,124 +5,183 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import { User } from '@/types';
+import { Button } from '@/Components/ui/button';
+import { PlusIcon, Wallet } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs"
+import {
+    Activity,
+    ArrowUpRight,
+    CircleUser,
+    CreditCard,
+    DollarSign,
+    Menu,
+    Package2,
+    Search,
+    Users,
+} from "lucide-react"
+
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+} from "@/Components/ui/avatar"
+import { Badge } from "@/Components/ui/badge"
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/Components/ui/card"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/Components/ui/dropdown-menu"
+import { Input } from "@/Components/ui/input"
+import { Sheet, SheetContent, SheetTrigger } from "@/Components/ui/sheet"
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/Components/ui/table"
+
 
 export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
-                        <div className="flex">
-                            <div className="shrink-0 flex items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                                </Link>
-                            </div>
-
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
-                            </div>
-                        </div>
-
-                        <div className="hidden sm:flex sm:items-center sm:ms-6">
-                            <div className="ms-3 relative">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
-                                            >
-                                                {user.name}
-
-                                                <svg
-                                                    className="ms-2 -me-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
-
-                                    <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
-                                            Log Out
-                                        </Dropdown.Link>
-                                    </Dropdown.Content>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <div className="-me-2 flex items-center sm:hidden">
-                            <button
-                                onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out"
+        <>
+            <div className="flex min-h-screen w-full flex-col">
+                <header className="sticky z-50 top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+                    <nav className="hidde text-nowrap flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+                        <Link
+                            href="#"
+                            className="flex items-center gap-2 text-lg font-semibold md:text-base"
+                        >
+                            <Wallet className="h-6 w-6" />
+                            <span className="">Finanças</span>
+                        </Link>
+                        <Link
+                            href={route('dashboard')}
+                            className="text-foreground transition-colors hover:text-foreground"
+                        >
+                            Visão Geral
+                        </Link>
+                        <Link
+                            href={route('fixed-expense.index')}
+                            className="text-muted-foreground transition-colors hover:text-foreground"
+                        >
+                            Despesas Fixas
+                        </Link>
+                    </nav>
+                    <Sheet>
+                        <SheetTrigger asChild>
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="shrink-0 md:hidden"
                             >
-                                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path
-                                        className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                                <Menu className="h-5 w-5" />
+                                <span className="sr-only">Toggle navigation menu</span>
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent side="left">
+                            <nav className="grid gap-6 text-lg font-medium">
+                                <Link
+                                    href="#"
+                                    className="flex items-center gap-2 text-lg font-semibold"
+                                >
+                                    <Package2 className="h-6 w-6" />
+                                    <span className="sr-only">Acme Inc</span>
+                                </Link>
+                                <Link href="#" className="hover:text-foreground">
+                                    Dashboard
+                                </Link>
+                                <Link
+                                    href="#"
+                                    className="text-muted-foreground hover:text-foreground"
+                                >
+                                    Orders
+                                </Link>
+                                <Link
+                                    href="#"
+                                    className="text-muted-foreground hover:text-foreground"
+                                >
+                                    Products
+                                </Link>
+                                <Link
+                                    href="#"
+                                    className="text-muted-foreground hover:text-foreground"
+                                >
+                                    Customers
+                                </Link>
+                                <Link
+                                    href="#"
+                                    className="text-muted-foreground hover:text-foreground"
+                                >
+                                    Analytics
+                                </Link>
+                            </nav>
+                        </SheetContent>
+                    </Sheet>
+                    <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+                        <form className="ml-auto flex-1 sm:flex-initial">
+                            {/* <div className="relative">
+                                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    type="search"
+                                    placeholder="Pesquisar transações..."
+                                    className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
+                                />
+                            </div> */}
+                        </form>
 
-                <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
-
-                    <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800 dark:text-gray-200">
-                                {user.name}
-                            </div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
-                        </div>
-
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                            <ResponsiveNavLink method="post" href={route('logout')} as="button">
+                        <Dropdown.Content contentClasses='ml-auto'>
+                            <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
+                            <Dropdown.Link href={route('logout')} method="post" as="button">
                                 Log Out
-                            </ResponsiveNavLink>
-                        </div>
+                            </Dropdown.Link>
+                        </Dropdown.Content>
+
+
+
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="secondary" size="icon" className="rounded-full">
+                                    <CircleUser className="h-5 w-5" />
+                                    <span className="sr-only">Toggle user menu</span>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>{user.name.split(' ')[0]} {user.name.split(' ')[1]}</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                    <Link href={route('profile.edit')}>Perfil</Link>
+                                </DropdownMenuItem>
+
+                                <DropdownMenuItem>Configurações</DropdownMenuItem>
+                                {/* <DropdownMenuItem>Suporte</DropdownMenuItem> */}
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                    <Dropdown.Link href={route('logout')} method="post" as="button">
+                                        Sair
+                                    </Dropdown.Link>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
-                </div>
-            </nav>
-
-            {header && (
-                <header className="bg-white dark:bg-gray-800 shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>
-            )}
-
-            <main>{children}</main>
-        </div>
+                <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+                    <main>{children}</main>
+                </main>
+            </div>
+        </>
     );
 }
