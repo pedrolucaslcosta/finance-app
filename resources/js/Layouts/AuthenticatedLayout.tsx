@@ -1,39 +1,12 @@
-import { useState, PropsWithChildren, ReactNode, useEffect } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
+import { useState, PropsWithChildren, ReactNode } from 'react';
 import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link, usePage } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { User } from '@/types';
 import { Button } from '@/Components/ui/button';
-import { PlusIcon, Wallet } from 'lucide-react';
+import { Wallet } from 'lucide-react';
 import { Toaster } from "@/Components/ui/sonner";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs"
-import {
-    Activity,
-    ArrowUpRight,
-    CircleUser,
-    CreditCard,
-    DollarSign,
-    Menu,
-    Package2,
-    Search,
-    Users,
-} from "lucide-react"
+import { CircleUser, Menu, Package2, } from "lucide-react"
 
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-} from "@/Components/ui/avatar"
-import { Badge } from "@/Components/ui/badge"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/Components/ui/card"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -42,20 +15,10 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu"
-import { Input } from "@/Components/ui/input"
+
 import { Sheet, SheetContent, SheetTrigger } from "@/Components/ui/sheet"
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/Components/ui/table"
 
-
-export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+export default function Authenticated({ user, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
 
     return (
         <>
@@ -102,32 +65,14 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                     <Package2 className="h-6 w-6" />
                                     <span className="sr-only">Acme Inc</span>
                                 </Link>
-                                <Link href="#" className="hover:text-foreground">
-                                    Dashboard
+                                <Link href={route('dashboard')} className="hover:text-foreground">
+                                    Visão Geral
                                 </Link>
                                 <Link
-                                    href="#"
+                                    href={route('fixed-expense.index')}
                                     className="text-muted-foreground hover:text-foreground"
                                 >
-                                    Orders
-                                </Link>
-                                <Link
-                                    href="#"
-                                    className="text-muted-foreground hover:text-foreground"
-                                >
-                                    Products
-                                </Link>
-                                <Link
-                                    href="#"
-                                    className="text-muted-foreground hover:text-foreground"
-                                >
-                                    Customers
-                                </Link>
-                                <Link
-                                    href="#"
-                                    className="text-muted-foreground hover:text-foreground"
-                                >
-                                    Analytics
+                                    Despesas Fixas
                                 </Link>
                             </nav>
                         </SheetContent>
@@ -151,8 +96,6 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                             </Dropdown.Link>
                         </Dropdown.Content>
 
-
-
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="secondary" size="icon" className="rounded-full">
@@ -168,7 +111,6 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                 </DropdownMenuItem>
 
                                 <DropdownMenuItem>Configurações</DropdownMenuItem>
-                                {/* <DropdownMenuItem>Suporte</DropdownMenuItem> */}
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem>
                                     <Dropdown.Link href={route('logout')} method="post" as="button">
@@ -184,7 +126,6 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                 </main>
             </div>
 
-            {/* Toaster Notifications */}
             <Toaster />
         </>
     );

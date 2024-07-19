@@ -2,12 +2,11 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, router } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { Button } from '@/Components/ui/button';
-import { Plus, PlusCircle } from 'lucide-react';
+import { PlusCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/Components/ui/card'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/Components/ui/dropdown-menu'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table'
 import { MoreHorizontal } from "lucide-react"
-import { Badge } from "@/Components/ui/badge";
 import {
     Dialog,
     DialogContent,
@@ -41,8 +40,6 @@ const formSchema = z.object({
     amount: z.string().min(1).max(50),
 });
 
-
-
 export default function FixedExpenses({ auth, fixedExpenses }: PageProps<{ fixedExpenses: FixedExpense[] }>) {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -70,14 +67,6 @@ export default function FixedExpenses({ auth, fixedExpenses }: PageProps<{ fixed
         });
     }
 
-    // useEffect(() => {
-    //     const handleSuccessToast = () => {
-    //         setIsDialogOpen(false);
-    //     };
-
-    //     handleSuccessToast();
-    // }, [toast.success]);
-
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -96,7 +85,7 @@ export default function FixedExpenses({ auth, fixedExpenses }: PageProps<{ fixed
                         <DialogHeader>
                             <DialogTitle>Nova Despesa Fixa</DialogTitle>
                             <DialogDescription>
-                                Adicione uma nova Despesa Fixa. 
+                                Adicione uma nova Despesa Fixa.
                             </DialogDescription>
                         </DialogHeader>
                         <Form {...form}>
@@ -124,7 +113,7 @@ export default function FixedExpenses({ auth, fixedExpenses }: PageProps<{ fixed
                                         <FormItem>
                                             <FormLabel>Valor</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="00.00" {...field} 
+                                                <Input placeholder="00.00" {...field}
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -148,63 +137,7 @@ export default function FixedExpenses({ auth, fixedExpenses }: PageProps<{ fixed
 
                 </CardHeader>
                 <CardContent>
-                    <DataTable columns={columns} data={fixedExpenses}/>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>ID</TableHead>
-                                <TableHead>Descrição</TableHead>
-                                <TableHead>Valor</TableHead>
-                                <TableHead>
-                                    <span className="sr-only">Actions</span>
-                                </TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {
-                                fixedExpenses && fixedExpenses.length > 0 ? (
-                                    fixedExpenses.map((fixedExpense) => (
-                                        <TableRow key={fixedExpense.id}>
-                                            <TableCell>
-                                                {fixedExpense.id}
-                                            </TableCell>
-                                            <TableCell className="font-medium">
-                                                {fixedExpense.description}
-                                            </TableCell>
-                                            <TableCell>
-                                                R${fixedExpense.amount}
-                                            </TableCell>
-                                            <TableCell>
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger asChild>
-                                                        <Button aria-haspopup="true" size="icon" variant="ghost">
-                                                            <MoreHorizontal className="h-4 w-4" />
-                                                            <span className="sr-only">Toggle menu</span>
-                                                        </Button>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end">
-                                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                                                        <DropdownMenuItem>Delete</DropdownMenuItem>
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))
-                                ) : (
-                                    <TableRow>
-                                        <TableCell colSpan={5}>
-                                            <div className="text-center">
-                                                <p className="text-sm text-muted-foreground">
-                                                    Nenhuma Despesa Fixa
-                                                </p>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                )
-                            }
-                        </TableBody>
-                    </Table>
+                    <DataTable columns={columns} data={fixedExpenses} />
                 </CardContent>
                 <CardFooter>
                     <div className="text-xs text-muted-foreground">
