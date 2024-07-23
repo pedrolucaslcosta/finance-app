@@ -12,10 +12,7 @@ class FixedExpensesController extends Controller
     public function index()
     {
         $fixedExpenses = FixedExpense::all();
-
-        return Inertia::render('FixedExpense/Index', [
-            'fixedExpenses' => $fixedExpenses,
-        ]);
+        return Inertia::render('FixedExpense/Index', ['fixedExpenses' => $fixedExpenses]);
     }
 
     public function create()
@@ -25,7 +22,6 @@ class FixedExpensesController extends Controller
 
     public function store(Request $request)
     {
-        
         $validated = $request->validate([
             'description' => 'nullable|string',
             'amount' => 'required|numeric',
@@ -35,20 +31,20 @@ class FixedExpensesController extends Controller
 
         FixedExpense::create($validated);
 
-        return to_route('fixed-expense.index')->with('success','Conta Fixa Criada com Sucesso!');
+        return redirect()->route('fixed-expense.index')->with('success', 'Conta Fixa Criada com Sucesso!');
     }
 
-    public function show(Transaction $transaction)
+    public function show(FixedExpense $fixedExpense)
     {
-        return view('transactions.show', compact('transaction'));
+        return redirect()->route('fixed-expense.index')->with('error', 'Função não implementada.');
     }
 
-    public function edit(Transaction $transaction)
+    public function edit(FixedExpense $fixedExpense)
     {
-        return view('transactions.edit', compact('transaction'));
+        return Inertia::render('FixedExpenses/Edit', ['fixedExpense' => $fixedExpense]);
     }
 
-    public function update(Request $request, Transaction $transaction)
+    public function update(Request $request, FixedExpense $fixedExpense)
     {
         $validated = $request->validate([
             'title' => 'sometimes|required|string|max:255',
@@ -57,15 +53,14 @@ class FixedExpensesController extends Controller
             'user_id' => 'sometimes|required|exists:users,id',
         ]);
 
-        $transaction->update($validated);
+        $fixedExpense->update($validated);
 
-        return redirect()->route('transactions.index');
+        return redirect()->route('fixed-expense.index')->with('success', 'Conta Fixa Atualizada com Sucesso!');
     }
 
-    public function destroy(Transaction $transaction)
+    public function destroy(FixedExpense $fixedExpense)
     {
-        $transaction->delete();
-
-        return redirect()->route('transactions.index');
+        $fixedExpense->delete();
+        return redirect()->route('fixed-expenses.index')->with('success', 'Conta Fixa Excluída com Sucesso!');
     }
 }
