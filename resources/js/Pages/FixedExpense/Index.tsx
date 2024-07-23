@@ -73,7 +73,11 @@ export default function FixedExpenses({ auth, fixedExpenses }: PageProps<{ fixed
             header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Transações</h2>}
         >
             <Head title="Transações" />
-            <div className="flex justify-end my-2">
+            <div className="flex justify-between my-2">
+                <div>
+                    <h3 className='font-semibold text-xl text-gray-800 leading-tight'>Despesas Fixas</h3>
+                    <p className='text-muted-foreground'>Gerencie entradas e saídas registradas na sua conta.</p>
+                </div>
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <DialogTrigger>
                         <Button>
@@ -126,25 +130,7 @@ export default function FixedExpenses({ auth, fixedExpenses }: PageProps<{ fixed
                     </DialogContent>
                 </Dialog>
             </div>
-            <Card>
-                <CardHeader>
-                    <CardTitle>Despesas Fixas
-
-                    </CardTitle>
-                    <CardDescription>
-                        Gerencie entradas e saídas registradas na sua conta.
-                    </CardDescription>
-
-                </CardHeader>
-                <CardContent>
-                    <DataTable columns={columns} data={fixedExpenses} />
-                </CardContent>
-                <CardFooter>
-                    <div className="text-xs text-muted-foreground">
-                        Showing <strong>1-10</strong> of <strong>32</strong> products
-                    </div>
-                </CardFooter>
-            </Card>
+            <DataTable columns={columns} data={fixedExpenses} />
         </AuthenticatedLayout>
     );
 }
