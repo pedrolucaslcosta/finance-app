@@ -20,8 +20,11 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('transaction', TransactionController::class)->middleware(['auth', 'verified']);
-Route::resource('fixed-expense', FixedExpensesController::class)->middleware(['auth', 'verified']);
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('transaction', TransactionController::class);
+    Route::resource('fixed-expense', FixedExpensesController::class);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
