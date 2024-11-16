@@ -4,7 +4,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  distDir: 'docs',
   basePath: '/finance-app',
   assetPrefix: '/finance-app',
 };
