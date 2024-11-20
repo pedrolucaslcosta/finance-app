@@ -1,4 +1,8 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import {
+  Home, 
+  ArrowRightLeft, 
+  HandCoins
+} from "lucide-react"
 
 import {
   Sidebar,
@@ -14,35 +18,25 @@ import {
 // Menu items.
 const items = [
   {
-    title: "Home",
+    title: "Início",
     url: "#",
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
+    title: "Transações",
+    url: "/transactions",
+    icon: ArrowRightLeft,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
+    title: "Despesas Fixas",
+    url: "/fixed-expenses",
+    icon: HandCoins,
+  }
 ]
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar >
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>

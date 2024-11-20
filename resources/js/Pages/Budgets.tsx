@@ -17,18 +17,18 @@ export default function Dashboard() {
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Transações
+                    Orçamentos
                 </h2>
             }
         >
-            <Head title="Transações" />
+            <Head title="Orçamentos" />
 
             <div className="flex justify-end">
                 <Button>Nova</Button>
             </div>
 
             <Table>
-                <TableCaption>Lista das transações mais recentes.</TableCaption>
+                <TableCaption>Lista dos orçamentos mais recentes.</TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-[100px]">Invoice</TableHead>

@@ -3,9 +3,25 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { SidebarProvider, SidebarTrigger } from '@/Components/ui/sidebar';
+import { SidebarProvider } from '@/Components/ui/sidebar';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
+
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/Components/ui/breadcrumb"
+
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarInset,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarTrigger,
+  } from "@/Components/ui/sidebar"
+import { Separator } from '@/components/ui/separator';
 
 export default function Authenticated({
     header,
@@ -20,9 +36,29 @@ export default function Authenticated({
         <div>
             <SidebarProvider>
                 <AppSidebar />
+                <SidebarInset>
+                    <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+                        <SidebarTrigger className="-ml-1" />
+                        <Separator orientation="vertical" className="mr-2 h-4" />
+                        <Breadcrumb>
+                            <BreadcrumbList>
+                                <BreadcrumbItem className="hidden md:block">
+                                    <BreadcrumbLink href="#">
+                                        Transações
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                                {/* <BreadcrumbSeparator className="hidden md:block" /> */}
+                                {/* <BreadcrumbItem>
+                                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                                </BreadcrumbItem> */}
+                            </BreadcrumbList>
+                        </Breadcrumb>
+                    </header>
+                    <div className="flex flex-1 flex-col gap-4 p-4">
+                        {children}
+                    </div>
+                </SidebarInset>
                 <main>
-                    <SidebarTrigger />
-                    {children}
                 </main>
             </SidebarProvider>
             {/* <div className="min-h-screen bg-gray-100">
