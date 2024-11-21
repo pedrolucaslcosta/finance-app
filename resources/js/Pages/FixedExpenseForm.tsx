@@ -19,7 +19,7 @@ import { DialogFooter } from "@/Components/ui/dialog"
 
 const formSchema = z.object({
     description: z.string().min(2).max(50),
-    billing_day: z.number(),
+    billing_day: z.string(),
     amount: z.string().transform((val) => Number(val)),
 })
 
@@ -91,7 +91,7 @@ export function FixedExpenseForm({ initialData = null }) {
                         <FormItem>
                             <FormLabel>Dia do pagamento</FormLabel>
                             <FormControl>
-                                <Input type="number" placeholder="Ex.: 5" {...field} max={31} min={1} />
+                                <Input type='number' placeholder="Ex.: 5" {...field} max={31} min={1} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

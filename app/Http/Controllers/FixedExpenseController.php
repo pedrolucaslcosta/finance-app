@@ -107,7 +107,15 @@ class FixedExpenseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $expense = FixedExpense::find($id);
+
+        if (!$expense) {
+            return response()->json(['message' => 'Despesa não encontrada'], 404);
+        }
+
+        $expense->delete();
+
+        return response()->json(['message' => 'Despesa excluída com sucesso']);
     }
 
     public function list() {
