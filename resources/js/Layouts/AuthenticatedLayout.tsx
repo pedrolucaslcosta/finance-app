@@ -6,6 +6,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { SidebarProvider } from '@/Components/ui/sidebar';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
+import { Toaster } from "@/Components/ui/sonner"
 
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/Components/ui/breadcrumb"
 
@@ -34,6 +35,7 @@ export default function Authenticated({
 
     return (
         <div>
+            <Toaster />
             <SidebarProvider>
                 <AppSidebar />
                 <SidebarInset>

@@ -2,6 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { toast } from "sonner"
 
 import { Button } from "@/Components/ui/button"
 import {
@@ -55,14 +56,14 @@ export function FixedExpenseForm({ initialData = null }) {
             });
 
             if (response.ok) {
-                alert("Dados atualizados com sucesso!");
+                toast("Dados atualizados com sucesso!");
             } else {
                 const errorData = await response.json();
-                alert(`Erro ao enviar os dados: ${errorData.message || "Erro desconhecido"}`);
+                toast(`Erro ao enviar os dados: ${errorData.message || "Erro desconhecido"}`);
             }
         } catch (error) {
             console.error("Erro na requisição:", error);
-            alert("Ocorreu um erro inesperado. Tente novamente mais tarde.");
+            toast("Ocorreu um erro inesperado. Tente novamente mais tarde.");
         }
     };
 
