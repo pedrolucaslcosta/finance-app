@@ -77,7 +77,29 @@ class FixedExpenseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'description' => ['required', 'string', 'max:50'],
+            'billing_day' => ['required', 'integer', 'min:1', 'max:31'],
+            'amount' => ['required', 'integer', 'min:0.1'],
+        ]);
+
+        $input = $request->all();
+
+        $fixedExpense = FixedExpense::find($id);
+
+        if (!$fixedExpense) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Ocorreu um erro ao salvar a despesa fixa.',
+            ], 400);
+        }
+
+        $fixedExpense->update($input);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Dados salvos com sucesso.',
+        ]);
     }
 
     /**

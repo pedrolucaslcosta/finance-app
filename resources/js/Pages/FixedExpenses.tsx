@@ -48,9 +48,27 @@ interface Expense {
     billing_day: number;
     amount: number;
     status: string;
-  }
+}
 
 export default function FixedExpenses({ fixed_expenses }: Props) {
+
+    const [isFixedExpensesDialogOpen, setIsFixedExpensesDialogOpen] = useState(false);
+    const [initialData, setInitialData] = useState<any>(null); // Estado para dados iniciais (para edição)
+
+    // Função para abrir o formulário no modo de criação
+    const openCreateFEDialog = () => {
+        setInitialData(null); // Limpa dados anteriores quando criando
+        setIsFixedExpensesDialogOpen(true);
+    };
+
+    // Função para abrir o formulário no modo de edição
+    const openEditFEDialog = (expense: any) => {
+        setInitialData(expense); // Preenche com os dados da despesa
+        setIsFixedExpensesDialogOpen(true);
+    };
+
+    const openFixedExpensesDialog = () => setIsFixedExpensesDialogOpen(true);
+    const closeFixedExpensesDialog = () => setIsFixedExpensesDialogOpen(false);
 
     return (
         <AuthenticatedLayout
@@ -63,21 +81,23 @@ export default function FixedExpenses({ fixed_expenses }: Props) {
             <Head title="Despesas Fixas" />
 
             <div className="flex justify-end">
-                <Dialog>
+                <Dialog open={isFixedExpensesDialogOpen} onOpenChange={setIsFixedExpensesDialogOpen}>
                     <DialogTrigger asChild>
-                        <Button><PlusCircle /> Nova</Button>
+                        <Button onClick={openCreateFEDialog}><PlusCircle /> Nova</Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
-                            <DialogTitle>Nova Despesa Fixa</DialogTitle>
+                            <DialogTitle>{initialData ? "Editar Despesa Fixa" : "Nova Despesa Fixa"}</DialogTitle>
                             <DialogDescription>
-                                Preencha os dados da nova despesa fixa.
+                                {initialData ? "Edite os dados da despesa fixa." : "Preencha os dados da nova despesa fixa."}
                             </DialogDescription>
                         </DialogHeader>
-                        <FixedExpenseForm />
+                        <FixedExpenseForm initialData={initialData} />
                     </DialogContent>
                 </Dialog>
             </div>
+
+
 
             <Table>
                 <TableCaption>Lista das transações mais recentes.</TableCaption>
@@ -111,7 +131,10 @@ export default function FixedExpenses({ fixed_expenses }: Props) {
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent>
-                                            <DropdownMenuItem>Editar</DropdownMenuItem>
+
+                                            <DropdownMenuItem onClick={() => openEditFEDialog(expense)}>
+                                                Editar
+                                            </DropdownMenuItem>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuItem>Apagar</DropdownMenuItem>
                                         </DropdownMenuContent>

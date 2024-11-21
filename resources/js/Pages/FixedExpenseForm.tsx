@@ -24,12 +24,12 @@ const formSchema = z.object({
 
 const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
-export function FixedExpenseForm() {
+export function FixedExpenseForm({ initialData = null }) {
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
+        defaultValues: initialData || {
             description: '',
             billing_day: 1,
             amount: 0,
@@ -39,8 +39,14 @@ export function FixedExpenseForm() {
     // 2. Define a submit handler.
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const response = await fetch("/fixed-expenses", {
-                method: "POST",
+            const url = initialData?.id ? `/fixed-expenses/${initialData.id}` : "/fixed-expenses";
+            console.log('url', url);
+
+            const method = initialData?.id ? "PUT" : "POST";
+            console.log('method', method);
+
+            const response = await fetch(url, {
+                method: method,
                 headers: {
                     "Content-Type": "application/json",
                     "X-CSRF-TOKEN": csrfToken,
@@ -49,7 +55,7 @@ export function FixedExpenseForm() {
             });
 
             if (response.ok) {
-                alert("Dados enviados com sucesso!");
+                alert("Dados atualizados com sucesso!");
             } else {
                 const errorData = await response.json();
                 alert(`Erro ao enviar os dados: ${errorData.message || "Erro desconhecido"}`);
@@ -64,8 +70,6 @@ export function FixedExpenseForm() {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-
-
                 <FormField
                     control={form.control}
                     name="description"
@@ -106,7 +110,9 @@ export function FixedExpenseForm() {
                     )}
                 />
                 <DialogFooter>
-                    <Button type="submit">Salvar</Button>
+                    <Button type="submit">
+                        {initialData ? "Atualizar" : "Salvar"}
+                    </Button>
                 </DialogFooter>
             </form>
         </Form>
