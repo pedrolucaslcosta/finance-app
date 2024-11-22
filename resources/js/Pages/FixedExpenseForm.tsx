@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { toast } from "sonner"
 
+import { createOrUpdateFixedExpense } from "@/api/fixedExpenses";
+
 import { Button } from "@/Components/ui/button"
 import {
     Form,
@@ -39,34 +41,8 @@ export function FixedExpenseForm({ initialData = null }) {
 
     // 2. Define a submit handler.
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        try {
-            const url = initialData?.id ? `/fixed-expenses/${initialData.id}` : "/fixed-expenses";
-            console.log('url', url);
-
-            const method = initialData?.id ? "PUT" : "POST";
-            console.log('method', method);
-
-            const response = await fetch(url, {
-                method: method,
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": csrfToken,
-                },
-                body: JSON.stringify(values),
-            });
-
-            if (response.ok) {
-                toast("Dados atualizados com sucesso!");
-            } else {
-                const errorData = await response.json();
-                toast(`Erro ao enviar os dados: ${errorData.message || "Erro desconhecido"}`);
-            }
-        } catch (error) {
-            console.error("Erro na requisição:", error);
-            toast("Ocorreu um erro inesperado. Tente novamente mais tarde.");
-        }
+        createOrUpdateFixedExpense(values, initialData);
     };
-
 
     return (
         <Form {...form}>

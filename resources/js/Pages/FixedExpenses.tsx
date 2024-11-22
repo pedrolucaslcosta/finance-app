@@ -24,6 +24,7 @@ import {
 import { Dot, Ellipsis, HandCoins, PlusCircle } from 'lucide-react';
 import { FixedExpenseForm } from './FixedExpenseForm';
 
+import { deleteFixedExpense } from "@/api/fixedExpenses";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -96,26 +97,7 @@ export default function FixedExpenses({ fixed_expenses }: Props) {
 
         if (!confirmDeletion) return;
 
-        try {
-            const response = await fetch(`/fixed-expenses/${id}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": csrfToken,
-                },
-            });
-
-            if (response.ok) {
-                toast("Despesa excluída com sucesso!");
-                // Você pode atualizar a lista de despesas ou fechar o modal, se necessário.
-            } else {
-                const errorData = await response.json();
-                toast(`Erro ao excluir despesa: ${errorData.message || "Erro desconhecido"}`);
-            }
-        } catch (error) {
-            console.error("Erro ao excluir despesa:", error);
-            toast("Ocorreu um erro inesperado. Tente novamente.");
-        }
+        deleteFixedExpense(id);
     };
 
     // Verifica se a exclusão foi confirmada e então executa a função handleDelete
@@ -136,6 +118,24 @@ export default function FixedExpenses({ fixed_expenses }: Props) {
                 return ''
         }
     }
+
+    const [expenses, setExpenses] = useState([]);
+
+    const fetchExpenses = async () => {
+        try {
+            const response = await fetch("/fixed-expenses/list");
+            const data = await response.json();
+            setExpenses(data);
+        } catch (error) {
+            console.error("Erro ao buscar despesas:", error);
+        }
+    };
+
+
+    // Buscar despesas ao montar o componente
+    useEffect(() => {
+        fetchExpenses();
+    }, []);
 
     return (
         <AuthenticatedLayout
