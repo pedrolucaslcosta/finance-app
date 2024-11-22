@@ -4,6 +4,7 @@ import { toast } from "sonner"
 
 const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
+
 // -----------------------------------------------------------------------------
 
 // export const fetchFixedExpenses = async () => {
@@ -22,6 +23,7 @@ export const createOrUpdateFixedExpense = async (fixedExpense, initialData) => {
 
         const method = initialData?.id ? "PUT" : "POST";
 
+        console.log(csrfToken);
         const response = await fetch(url, {
             method: method,
             headers: {
@@ -40,7 +42,6 @@ export const createOrUpdateFixedExpense = async (fixedExpense, initialData) => {
 
         return response.json();
     } catch (error) {
-        console.error("Erro na requisição:", error);
         toast("Ocorreu um erro inesperado. Tente novamente mais tarde.");
     }
 

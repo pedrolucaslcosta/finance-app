@@ -21,7 +21,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
-import { Dot, Ellipsis, HandCoins, PlusCircle } from 'lucide-react';
+import { Calendar, Dot, Ellipsis, HandCoins, PlusCircle, Repeat2 } from 'lucide-react';
 import { FixedExpenseForm } from './FixedExpenseForm';
 
 import { deleteFixedExpense } from "@/api/fixedExpenses";
@@ -203,11 +203,15 @@ export default function FixedExpenses({ fixed_expenses }: Props) {
                         {/* <TableCaption>Lista das transações mais recentes.</TableCaption> */}
                         <TableHeader>
                             <TableRow>
-                                <TableHead className='w-10 text-center'>Dia</TableHead>
+                                <TableHead className='w-10 hidden block-md text-center'>Dia</TableHead>
                                 <TableHead className=''>Descrição</TableHead>
                                 <TableHead className='text-right'>Valor</TableHead>
                                 <TableHead className="text-center hidden block-md">Status</TableHead>
-                                <TableHead className="text-right hidden block-md">Ações</TableHead>
+                                <TableHead className="text-right">
+                                    <span className='hidden block-md'>
+                                        Ações
+                                    </span>
+                                </TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -220,17 +224,18 @@ export default function FixedExpenses({ fixed_expenses }: Props) {
                             ) : (
                                 fixed_expenses.map((expense: any) => (
                                     <TableRow key={expense.id}>
-                                        <TableCell className='text-center'>{expense.billing_day}</TableCell>
-                                        <TableCell className="font-medium">{expense.description}</TableCell>
-                                        <TableCell className='text-right'>R$ {expense.amount}</TableCell>
-                                        <TableCell className="text-center">
-                                            <span className='block-md'>
-                                                <Dot size={40} className='text-red-500'></Dot>
+                                        <TableCell className='text-center hidden block-md'>{expense.billing_day}</TableCell>
+                                        <TableCell>
+                                            <span className='font-semibold'>
+                                                {expense.description}
                                             </span>
-                                            <Badge variant="outline" className='hidden'>
-                                                {getFEStatus(expense.status)}
-                                            </Badge>
+                                            <div className='block-md hidden-md'>
+                                                <span className='flex items-center gap-1 text-muted-foreground'>
+                                                    <Repeat2 size={14} /> Dia {expense.billing_day}
+                                                </span>
+                                            </div>
                                         </TableCell>
+                                        <TableCell className='text-right  font-semibold'>R$ {expense.amount}</TableCell>
                                         <TableCell className='text-right'>
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger>

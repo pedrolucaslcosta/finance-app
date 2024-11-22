@@ -2,7 +2,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { toast } from "sonner"
 
 import { createOrUpdateFixedExpense } from "@/api/fixedExpenses";
 
@@ -21,11 +20,9 @@ import { DialogFooter } from "@/Components/ui/dialog"
 
 const formSchema = z.object({
     description: z.string().min(2).max(50),
-    billing_day: z.string(),
+    billing_day: z.string().transform((val) => Number(val)),
     amount: z.string().transform((val) => Number(val)),
 })
-
-const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
 export function FixedExpenseForm({ initialData = null }) {
 
@@ -35,7 +32,7 @@ export function FixedExpenseForm({ initialData = null }) {
         defaultValues: initialData || {
             description: '',
             billing_day: 1,
-            amount: 0,
+            amount: 0.00,
         },
     })
 
@@ -54,7 +51,7 @@ export function FixedExpenseForm({ initialData = null }) {
                         <FormItem>
                             <FormLabel>Descrição</FormLabel>
                             <FormControl>
-                                <Input placeholder="Ex.: Aluguel" {...field} />
+                                <Input type="text" placeholder="Ex.: Aluguel" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -67,7 +64,7 @@ export function FixedExpenseForm({ initialData = null }) {
                         <FormItem>
                             <FormLabel>Dia do pagamento</FormLabel>
                             <FormControl>
-                                <Input type='number' placeholder="Ex.: 5" {...field} max={31} min={1} />
+                                <Input type="text" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

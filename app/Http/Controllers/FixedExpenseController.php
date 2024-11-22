@@ -31,13 +31,15 @@ class FixedExpenseController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'description' => ['required', 'string', 'max:50'],
             'billing_day' => ['required', 'integer', 'min:1', 'max:31'],
-            'amount' => ['required', 'integer', 'min:0.1'],
+            'amount' => ['required', 'numeric', 'min:0.01'],
         ]);
 
         $input = $request->all();
+
         $input['status'] = 'pending';
 
         $fixedExpense = FixedExpense::create($input);
