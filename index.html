@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+	<script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+	<script type="module" src="https://cdn.jsdelivr.net/npm/ionicons/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://cdn.jsdelivr.net/npm/ionicons/dist/ionicons/ionicons.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
+	<!-- Lucide Icons -->
+	<!-- Production version -->
+	<script src="https://unpkg.com/lucide@latest"></script>
+	
+	<!--  -->
+	
+	<style>
+		.example-content {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+		}
+		
+		.ion-padding div[slot='content'] {
+			background: rgba(var(--ion-color-light), 1) !important;
+		}
+	</style>
+	
+	<!-- <div mode='md' class='md'> -->
+		<div mode='ios' class='ios'>
+			
+			<ion-tabs>
+				<ion-tab tab="home">
+					<ion-nav id="home-nav"></ion-nav>
+					<div id="home-page">
+						<!--       <ion-header>
+							<ion-toolbar>
+								<ion-title>Transações</ion-title>
+							</ion-toolbar>
+						</ion-header> -->
+						<ion-content color='light'>
+							<!--           <ion-list inset="true">
+								<ion-item color='success'>
+									<ion-avatar slot="start">
+										<img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+									</ion-avatar>
+									<ion-label color='light'>
+										<ion-note color='light'><small>Boa tarde,</small></ion-note><br>
+										<ion-text>Pedro!</ion-text><br>
+									</ion-label>
+								</ion-item>
+							</ion-list> -->
+							<ion-list lines="full" inset='true'>
+								<ion-item>
+									<ion-avatar slot="start">
+										<img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+									</ion-avatar>
+									
+									<ion-label>
+										<ion-note><small>Boa tarde</small></ion-note><br>
+										<ion-text><strong>Pedro!</strong></ion-text>
+									</ion-label>
+									
+									<ion-button slot='end' shape='clear' color='dark'>
+										<ion-icon name='notifications'></ion-icon>
+									</ion-btuton>
+								</ion-item>
+							</ion-list>
+							<ion-list-header>
+								Resumo
+							</ion-list-header>
+							<ion-list lines="full" inset='true'>
+								<ion-item button='true'>
+									<!--               <ion-icon color='tertiary' slot='start' name='reader' size='small'></ion-icon> -->
+									<ion-label><b>Saldo atual</b></ion-label>
+									<ion-label slot='end'><b>R$ 34,50</b></ion-label>
+								</ion-item>
+								<ion-item button='true'>
+									<ion-icon color='success' slot='start' name='ellipse' size='small'></ion-icon>
+									<ion-label>Receitas</ion-label>
+									<ion-label slot='end'>R$ 30</ion-label>
+								</ion-item>
+								<ion-item button='true'>
+									<ion-icon color='danger' slot='start' name='ellipse' size='small'></ion-icon>
+									<ion-label>Despesas</ion-label>
+									<ion-label slot='end'>R$ 4,50</ion-label>
+								</ion-item>
+								<ion-item button='true'>
+									<ion-icon color='secondary' slot='start' name='ellipse' size='small'></ion-icon>
+									<ion-label>Faturas</ion-label>
+									<ion-label slot='end'>R$ 4323,50</ion-label>
+								</ion-item>
+								
+							</ion-list>
+							
+							<!-- TRANSACTIONS LIST -->
+							<!--           <ion-note color="medium" class="ion-margin-horizontal">
+								Transações
+							</ion-note> -->
+							<ion-list-header>
+								<ion-label>Transações</ion-label>
+								<ion-button color='dark'>Ver todas</ion-button>
+							</ion-list-header>
+							<ion-list lines="full" inset='true' id='transactions-list'></ion-list>
+							
+							<!-- FAB BUTTON -->
+							
+							<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+								<ion-fab-button id="open-modal" expand="block" color='success'>
+									<ion-icon name="add-outline"></ion-icon>
+								</ion-fab-button>
+							</ion-fab>
+							
+							<ion-modal trigger="open-modal" initial-breakpoint="0.25">
+								
+								<!--  MODAL ADD NEW      -->
+								<ion-content>
+									<ion-list lines="full">
+										<ion-item>
+											<ion-input id='new-transaction-input' autofocus placeholder="Nova transação"></ion-input>
+										</ion-item>
+										<ion-item>
+											<ion-label></ion-label>
+											<ion-button shape="round">
+												<ion-icon slot="icon-only" name="add-outline"></ion-icon>
+											</ion-button>
+										</ion-item>
+									</ion-list>
+									
+								</ion-content>
+							</ion-modal>
+						</ion-content>
+					</div>
+				</ion-tab>
+				<ion-tab tab="radio">
+					<ion-nav id="radio-nav"></ion-nav>
+					<div id="radio-page">
+						<!--         <ion-header>
+							<ion-toolbar>
+								<ion-title>Radio</ion-title>
+							</ion-toolbar>
+						</ion-header> -->
+						<ion-content>
+							<ion-list-header>
+								<ion-label>Recorrentes</ion-label>
+							</ion-list-header>
+							<ion-list>
+								<ion-item button='true'>
+									<ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+									<ion-label>
+										<ion-text><strong>Aluguel</strong></ion-text><br>
+										<ion-note>
+											<small>
+												<ion-icon name='today-outline'></ion-icon>
+												Dia 8
+												<ion-icon name='repeat-outline'></ion-icon>
+											</small>
+										</ion-note>
+									</ion-label>
+									<ion-label slot="end" class="ion-text-end">
+										<ion-text><small><b>R$ 600</b></small></ion-text><br>
+										<ion-note><small>
+											<ion-icon color='tertiary' name='ellipse'></ion-icon> Nubank
+										</small></ion-note>
+									</ion-label>
+								</ion-item>
+								<ion-item button='true'>
+									<ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+									<ion-label>
+										<ion-text><strong>Conta de Energia</strong></ion-text><br>
+										<ion-note>
+											<small>
+												<ion-icon name='today-outline'></ion-icon>
+												Dia 15
+												<ion-icon name='repeat-outline'></ion-icon>
+											</small>
+										</ion-note>
+									</ion-label>
+									<ion-label slot="end" class="ion-text-end">
+										<ion-text><small><b>R$ 100</b></small></ion-text><br>
+										<ion-note><small>
+											<ion-icon color='tertiary' name='ellipse'></ion-icon> Nubank
+										</small></ion-note>
+									</ion-label>
+								</ion-item>
+							</ion-list>
+							<!-- FAB BUTTON -->
+							
+							<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+								<ion-fab-button id="modal-recorrentes" expand="block" color='success'>
+									<ion-icon name="add-outline"></ion-icon>
+								</ion-fab-button>
+							</ion-fab>
+							
+							<ion-modal trigger="modal-recorrentes" initial-breakpoint="0.25">
+								
+								<!--  MODAL ADD NEW      -->
+								<ion-content>
+									<ion-list lines="full">
+										<ion-item>
+											<ion-input id='new-transaction-input' autofocus placeholder="Nova transação"></ion-input>
+										</ion-item>
+										<ion-item>
+											<ion-label></ion-label>
+											<ion-button shape="round">
+												<ion-icon slot="icon-only" name="add-outline"></ion-icon>
+											</ion-button>
+										</ion-item>
+									</ion-list>
+									
+								</ion-content>
+							</ion-modal>
+						</ion-content>
+					</div>
+				</ion-tab>
+				<ion-tab tab="library">
+					<ion-nav id="library-nav"></ion-nav>
+					<div id="library-page">
+						<ion-header>
+							<ion-toolbar>
+								<ion-title>Library</ion-title>
+							</ion-toolbar>
+						</ion-header>
+						<ion-content>
+							<div class="example-content">Library content</div>
+						</ion-content>
+					</div>
+				</ion-tab>
+				<ion-tab tab="search">
+					<ion-nav id="search-nav"></ion-nav>
+					<div id="search-page">
+						
+						<ion-header>
+							<ion-toolbar>
+								<ion-title slot='start'>Navegar</ion-title>
+								
+								<ion-buttons slot="end">
+									<ion-button>
+										<ion-icon color='dark' name='settings-outline'></ion-icon>
+									</ion-button>
+								</ion-buttons>
+							</ion-toolbar>
+						</ion-header>
+						
+						<ion-content color='light'>
+							<ion-list inset="true">
+								<ion-item button="true">
+									<ion-avatar slot="start">
+										<img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+									</ion-avatar>
+									<ion-label>
+										<ion-text>Pedro Lucas</ion-text><br>
+										<ion-note><small>Plano Pro</small></ion-note>
+									</ion-label>
+									<ion-note>Conta</ion-note>
+								</ion-item>
+							</ion-list>
+							<ion-list-header>
+								<ion-label>Contas</ion-label>
+								<ion-button fill="clear">
+									<ion-icon color='dark' name='add'></ion-icon>
+								</ion-button>
+							</ion-list-header>
+							<ion-list inset="true">
+								
+								<ion-item button="true">
+									
+									<ion-icon color='var(--ion-color-tertiary-tint)' slot='start' data-lucide='hash'></ion-icon>
+									
+									<ion-label>Nubank</ion-label>
+									<!--                 <ion-note slot="end">6</ion-note> -->
+								</ion-item>
+								<ion-item button="true">
+									<ion-icon color='var(--ion-color-primary-tint)' slot="start" data-lucide='hash'></ion-icon>
+									<ion-label>Mercado Pago</ion-label>
+								</ion-item>
+								<ion-item button="true">
+									<ion-icon color='var(--ion-color-secondary)' slot="start" data-lucide='hash'></ion-icon>
+									<ion-label>BTG</ion-label>
+								</ion-item>
+								<ion-item button="true" detail="false">
+									<ion-icon slot="start" data-lucide='pencil'></ion-icon>
+									<ion-label>Gerenciar Contas</ion-label>
+								</ion-item>
+							</ion-list>
+							<ion-list-header>
+								<ion-label>Categorias</ion-label>
+								<ion-button fill="clear">
+									<ion-icon color='dark' name='add'></ion-icon>
+								</ion-button>
+							</ion-list-header>
+							
+							<!--           <ion-item color='light' lines="none"> -->
+								<!--             <ion-button slot='end' fill="clear">
+									<ion-icon name='add'></ion-icon>
+								</ion-button> -->
+							<!--           </ion-item> -->
+							
+							<ion-list inset="true">
+								
+								<ion-item button="true">
+									
+									<ion-icon slot='start' data-lucide='at-sign'></ion-icon>
+									
+									<ion-label>Transporte</ion-label>
+									<!--                 <ion-note slot="end">6</ion-note> -->
+								</ion-item>
+								<ion-item button="true">
+									<ion-icon slot="start" data-lucide='at-sign'></ion-icon>
+									<ion-label>Mercado</ion-label>
+								</ion-item>
+								<ion-item button="true">
+									<ion-icon slot="start" data-lucide='at-sign'></ion-icon>
+									<ion-label>Serviços</ion-label>
+								</ion-item>
+								<ion-item button="true">
+									<ion-icon slot="start" data-lucide='at-sign'></ion-icon>
+									<ion-label>Assinaturas</ion-label>
+								</ion-item>
+								<ion-item button="true" detail="false">
+									<ion-icon slot="start" data-lucide='pencil'></ion-icon>
+									<ion-label>Gerenciar Categorias</ion-label>
+								</ion-item>
+							</ion-list>
+						</div>
+					</ion-tab>
+					
+					<!--  BOTTOM MENU  -->
+					<ion-tab-bar slot="bottom">
+						<ion-tab-button tab="home">
+							<ion-icon name="reader-outline"></ion-icon>
+							Início
+						</ion-tab-button>
+						<ion-tab-button tab="radio">
+							<ion-icon name="today-outline"></ion-icon>
+							Recorrentes
+						</ion-tab-button>
+						<ion-tab-button tab="library">
+							<ion-icon name="pie-chart-outline"></ion-icon>
+							Orçamentos
+						</ion-tab-button>
+						<ion-tab-button tab="search">
+							<ion-icon name="albums-outline"></ion-icon>
+							Navegar
+						</ion-tab-button>
+					</ion-tab-bar>
+					
+				</ion-tabs>
+				
+			</div>
+			
+			<script>
+				lucide.createIcons();
+				const transactions = {
+					1: {
+						id: 1,
+						descricao: 'Uber',
+						valor: 8.75,
+						categoria: 'Transporte',
+						datetime: '2024-08-12 11:50'
+					},
+					2: {
+						id: 2,
+						descricao: 'Teste',
+						valor: 8.75,
+						categoria: 'Transporte',
+						datetime: '2024-08-12 11:50'
+					},
+				};
+				const homeNav = document.querySelector('#home-nav');
+				const homePage = document.querySelector('#home-page');
+				homeNav.root = homePage;
+				const radioNav = document.querySelector('#radio-nav');
+				const radioPage = document.querySelector('#radio-page');
+				radioNav.root = radioPage;
+				const libraryNav = document.querySelector('#library-nav');
+				const libraryPage = document.querySelector('#library-page');
+				libraryNav.root = libraryPage;
+				const searchNav = document.querySelector('#search-nav');
+				const searchPage = document.querySelector('#search-page');
+				searchNav.root = searchPage;
+				//   var fab = $('#open-modal');
+				// var add_input = $('#new-transaction-input');
+				// // Seleciona o modal
+				//   var modal = document.querySelector('ion-modal');
+				//   // Evento para quando o modal for aberto
+				//   modal.addEventListener('ionModalDidPresent', function() {
+				//     // Foca no input dentro do modal
+				//     add_input.focus();
+				//   });
+				//   // Quando o FAB for clicado, abre o modal
+				//   fab.on('click', function() {
+				//     modal.present();  // Abre o modal
+				//   });
+				// Seleciona o elemento onde os itens serão adicionados
+				var transactionList = $('#transactions-list');
+				// Percorre as transações e cria os elementos dinamicamente
+				Object.values(transactions).forEach(function(item) {
+					var date = new Date(item.datetime);
+					var timeFormatted = date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2); // Formata a hora
+					// Template de cada ion-item
+					var ionItem = `
+      <ion-item>
+        <ion-label>
+          <ion-text><strong>${item.descricao}</strong></ion-text><br>
+          <ion-note><small>${item.categoria}</small></ion-note>
+        </ion-label>
+        <ion-label slot="end" class="ion-text-end">
+          <ion-text><small><b>-R$ ${item.valor}</b></small></ion-text><br>
+          <ion-note><small>${timeFormatted}</small></ion-note>
+        </ion-label>
+      </ion-item>
+    
+    `;
+					// Adiciona o item no ion-list
+					transactionList.append(ionItem);
+				});
+				var ionSeeMore = `
+      <ion-item>
+        <ion-label>
+          <ion-text>Ver mais</ion-text>
+        </ion-label>
+      </ion-item>
+    `;
+				transactionList.append(ionSeeMore);
+			</script>
+			
+		</body>
+		</html>
